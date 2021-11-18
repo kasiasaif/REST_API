@@ -7,13 +7,13 @@ exports.addUser = async(req,res)=>{
         await result.save();
         res
         .status(200)
-        .send({message : 'Success', result , token})
+        .send({message : 'Success', result , token});
 
     }catch(error){
         console.log(error);
         res
         .status(451)
-        .send({message : 'Something went wrong, check server logs'})
+        .send({message : 'Something went wrong, check server logs'});
     }
 };
 
@@ -32,13 +32,13 @@ exports.logIn = async (req,res) => {
 exports.findUser = async (req, res) => {
     try{
         const result =  await User.find();
-        res.send(result)
+        res.send(result);
 
     }catch(error){
         console.log(error)
         res
         .status(500)
-        .send({message: 'Something went wrong, check server logs'})
+        .send({message: 'Something went wrong, check server logs'});
     }
 }
 
@@ -53,31 +53,61 @@ exports.findUserById = async (req,res) => {
         .send({message : 'Something went wrong, check server logs'});
     }
 }
-exports.updateUser = async(req, res)=>{
+exports.updateUsername = async(req, res)=>{
     try{
         const result = await User.updateOne({_id: req.params.id}, 
             {$set:{username: req.body.username}});
             res.json(result)
             console.log(result)
-        res.status(200).send({message: result})
+        res.status(200).send({message: result});
+
+    }catch(error){
+        console.log(error);
+        res
+        .status(418)
+        .send({message: "Something went wrong, check server logs"}); 
+    }
+}
+exports.updateEmail = async(req, res)=>{
+    try{
+        const result = await User.updateOne({_id: req.params.id}, 
+            {$set:{email: req.body.email}});
+            res.json(result)
+            console.log(result)
+        res.status(200).send({message: result});
+
+    }catch(error){
+        console.log(error);
+        res
+        .status(418)
+        .send({message: "Something went wrong, check server logs"})  ;
+    }
+}
+exports.updatePassword = async(req, res)=>{
+    try{
+        const result = await User.updateOne({_id: req.params.id}, 
+            {$set:{password: req.body.password}});
+            res.json(result)
+            console.log(result)
+        res.status(200).send({message: result});
 
     }catch(error){
         console.log(error)
         res
         .status(418)
-        .send({message: "Something went wrong, check server logs"})  
+        .send({message: "Something went wrong, check server logs"}) ; 
     }
 }
 exports.deleteUser = async(req, res)=>{
     try{
         const result = await User.remove({_id: req.params.id});
         res.json(result)
-        res.status(200).send({message: "Success",result})
+        res.status(200).send({message: "Success",result});
 
     }catch(error){
-        console.log(error)
+        console.log(error);
         res
         .status(418)
-        .send({message: "Something went wrong, check server logs"})  
+        .send({message: "Something went wrong, check server logs"});  
     }
-}
+};
